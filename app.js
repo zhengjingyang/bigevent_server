@@ -33,11 +33,13 @@ app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/api\//] 
 // 导入并使用用户路由模块
 const userRouter = require('./router/user')
 app.use('/api', userRouter)
-
+// 导入并使用 用户信息路由模块
+const userinfoRouter = require('./router/userinfo')
+app.use('/my', userinfoRouter)
 
 // 定义错误级别的中间件
 app.use((err, req, res, next) => {
-  // 验证失败的错误
+  // 数据验证失败的错误
   if (err instanceof joi.ValidationError) return res.cc(err)
   // 身份认证失败导致的错误
   if (err.name === 'UnauthorizedError') return res.cc('身份认证失败')
