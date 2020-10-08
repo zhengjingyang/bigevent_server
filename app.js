@@ -27,7 +27,8 @@ const expressJWT = require('express-jwt')
 // 导入配置文件
 const config = require('./config')
 app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/api\//] }))
-
+// 托管静态资源文件
+app.use('/uploads', express.static('./uploads'))
 
 
 // 导入并使用用户路由模块
@@ -39,6 +40,9 @@ app.use('/my', userinfoRouter)
 // 导入并使用 文章分类路由模块
 const artCateRouter = require('./router/artcate')
 app.use('/my/article', artCateRouter)
+// 导入并使用 文章路由模块
+const articleRouter = require('./router/article')
+app.use('/my/article', articleRouter)
 
 
 
